@@ -6,8 +6,7 @@ import {getDatabase, ref, onValue, get, child} from "firebase/database";
 const db = getDatabase(app);
 
 const strFree = `
-  21.00 | кондёр 25 срабатывает
-  21.40 |
+  21.40 | прохладно
   21.80 | 25 кондёр run, в 2 штанах за столом холодок по коленям
   22.60 | тепло в двух штанах и майке если стоя
   23.40 | жарко у стола
