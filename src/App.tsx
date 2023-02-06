@@ -5,6 +5,32 @@ import {getDatabase, ref, onValue, get, child} from "firebase/database";
 
 const db = getDatabase(app);
 
+const range: [string, number, string][] = [
+  ['dark-blue', 21.4, 'rgb(149, 137, 211)'],
+  ['blue', 21.8, 'rgb(95, 143, 197)'],
+  ['yellow', 22.6, 'rgb(223, 177, 6)'],
+  ['orange', 23.8, 'rgb(255,145,0)'],
+  ['red', 24.5, 'rgb(255,0,0)'],
+];
+
+const getColor = (temp: number) => {
+  let color = 'black';
+  for (let i = 0; i < range.length; i++) {
+    if (color !== 'black') {
+      break;
+    }
+    const rowArr:[string, number, string] = range[i];
+    const colorCss: string = rowArr[2];
+    const maxTemp = rowArr[1];
+    const minTemp = i === 0 ? -9999 : range[i-1][1];
+    if (temp > minTemp && temp <= maxTemp) {
+      color = colorCss;
+    }
+  }
+
+  return color;
+}
+
 const strFree = `
   21.40 | прохладно
   21.80 | 25 кондёр run, в 2 штанах за столом холодок по коленям
@@ -17,9 +43,9 @@ const strFree = `
   остыв до 21 за x ?
 `
 const strArr = strFree.split('\n').map(s => s.trim()).filter(s => s);
-console.log(strArr)
+
 function App() {
-  const [temperature, setTemperature] = useState(null);
+  const [temperature, setTemperature] = useState(-99);
   const [humidity, setHumidity] = useState(null);
   const [lastId, setLastIde] = useState(0);
 
@@ -61,8 +87,13 @@ function App() {
       <div id="webpage">
         <h2>ESP8266. Информация о температуре в помещении:</h2>
         <span>{lastId}</span>
-        <h3>Температура: {temperature}</h3>
+        <h3 style={{color: getColor(temperature)}}>Температура: {temperature}</h3>
         <h3>Влажность: {humidity}</h3>
+        <div style={{display: 'grid', gridAutoFlow: 'column'}}>
+          {range.map(r =>
+            <span style={{backgroundColor: r[2], textAlign: 'end'}}>{r[1]}</span>
+          )}
+        </div>
         t дома (dht11 в угловой секции 40см от пола)
         <div>
           {strArr.map(str => (
