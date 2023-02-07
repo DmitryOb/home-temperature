@@ -91,7 +91,9 @@ function App() {
         <h3>Влажность: {humidity}</h3>
         <div style={{display: 'grid', gridAutoFlow: 'column'}}>
           {range.map(r =>
-            <span style={{backgroundColor: r[2], textAlign: 'end'}}>{r[1]}</span>
+            <span style={{backgroundColor: r[2], textAlign: 'end'}} key={r[0]}>
+              {r[1]}
+            </span>
           )}
         </div>
         t дома (dht11 в угловой секции 40см от пола)
