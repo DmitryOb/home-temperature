@@ -1,6 +1,4 @@
-import {
-  useGoogleOneTapLogin,
-} from '@react-oauth/google';
+import {useGoogleOneTapLogin} from '@react-oauth/google';
 import {getAuth, signInWithCredential, GoogleAuthProvider} from "firebase/auth";
 
 export function GoogleOneTapLogin() {

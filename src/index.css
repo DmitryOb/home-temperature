@@ -108,3 +108,12 @@ button:focus-visible {
 .read-the-docs {
   color: #888;
 }
+
+#privacy {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #7a3232;
+  border-radius: 15px;
+  padding: 11px;
+}
