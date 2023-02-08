@@ -11,15 +11,20 @@
     "deploy": "vercel"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.7.0",
+    "@vercel/node": "^2.9.2",
     "body-parser": "^1.20.1",
+    "cookie": "^0.5.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "firebase": "^9.17.1",
     "firebase-admin": "^11.5.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1"
   },
   "devDependencies": {
+    "@types/cookie": "^0.5.1",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
