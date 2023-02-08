@@ -3,12 +3,15 @@ import {getColor, range} from "./utils";
 import {getDatabase, ref} from "firebase/database";
 import app from "./firebase-web-app-config";
 import {useObjectVal} from "react-firebase-hooks/database";
-// import PrivacyContent from "./PrivacyContent/PrivacyContent";
+import PrivacyContent from "./PrivacyContent/PrivacyContent";
+import {memo} from "react";
 
 const db = getDatabase(app);
 const randomIdQuery = ref(db, "randomId");
 const temperatureQuery = ref(db, "temperature");
 const humidityQuery = ref(db, "humidity");
+
+const PrivacyContentMemo = memo(PrivacyContent);
 
 function App() {
   const [randomId, loadingR, errorR] = useObjectVal<number, string, string>(randomIdQuery);
@@ -30,7 +33,7 @@ function App() {
           </span>
         )}
       </div>
-      {/*<PrivacyContent/>*/}
+      <PrivacyContentMemo/>
     </div>
   )
 }

@@ -1,36 +1,23 @@
 import {
   useGoogleOneTapLogin,
 } from '@react-oauth/google';
-import { signInWithCredential, GoogleAuthProvider } from "firebase/auth";
-import authWrite from "./firebase-web-app-config";
+import {getAuth, signInWithCredential, GoogleAuthProvider} from "firebase/auth";
 
-// FE: google sign-in -> success -> JWT -> SignIn on Firebase
-
-// на фронте читаем куку firebase_cookie верифицируем у бэка -> фаербэйса если все хорошо то не выводим кнопку
-// и показываем "особый" контент
-
-
-// @ts-ignore
-function GoogleOneTapLogin({ callback }) {
-  console.log(callback)
+export function GoogleOneTapLogin() {
   useGoogleOneTapLogin({
     onSuccess: credentialResponse => {
       const idToken = credentialResponse.credential;
       const credential = GoogleAuthProvider.credential(idToken);
-      signInWithCredential(authWrite, credential)
-        .then(r => r.user.getIdToken().then(JWT => {
-          console.log(JWT);
-          fetch('api/handler?jwt='+ JWT)
-            .then(r => callback())
-            .catch(er => console.log(er));
-        }))
-        .catch((error) => {
-          console.log(error)
-        });
+      console.log(credential);
+      console.log('Start to: signInWithCredential')
+      signInWithCredential(getAuth(), credential)
+        .then(r => {
+          console.log('signInWithCredential is done')
+          // r.user.getIdToken().then(JWT => console.log(JWT));
+        })
+        .catch(error => console.log(error))
     },
-    onError: () => {
-      console.log('Login Failed');
-    },
+    onError: () => console.log('Login Failed'),
   });
 
   return null
