@@ -17,7 +17,7 @@ export const getColor = (temp: number | null) => {
     }
     const rowArr: [string, number, string] = range[i];
     const colorCss: string = rowArr[2];
-    const maxTemp = rowArr[1];
+    const maxTemp = i === (range.length - 1) ? 9999 : rowArr[1];
     const minTemp = i === 0 ? -9999 : range[i - 1][1];
     if (temp > minTemp && temp <= maxTemp) {
       color = colorCss;
