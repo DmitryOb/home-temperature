@@ -44,7 +44,6 @@ function App() {
         <span className={'status-text'}>{isOnline ? 'ONLINE' : 'OFFLINE'}</span>
         <div className={'status'} style={{background: isOnline ? 'lawngreen' : 'crimson'}}/>
       </div>
-      <br/><br/>
       <div style={{opacity: 0.2}}>ID: {!errorR && !loadingR && randomId && randomId}</div>
       <h3>Влажность: {!errorH && !loadingH && humidity && humidity}</h3>
       <h2 style={{color: getColor(temperature ?? null)}}>
