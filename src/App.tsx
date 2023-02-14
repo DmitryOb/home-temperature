@@ -21,20 +21,20 @@ function App() {
 
   const [randomId, loadingR, errorR] = useObjectVal<number, string, string>(randomIdQuery);
   const prevRandomId = usePrevious(randomId);
-  const [isInitiallyID, setIsInitiallyID] = useState(true);
+  const [init, setInit] = useState(false);
   const lastRandomIdRef = useRef(randomId);
   const [lastTimeUpID, setLastTimeUpID] = useState(0);
   const [isOnline, setIsOnline] = useState(false)
 
   useEffect(() => {
-    if (prevRandomId !== randomId && prevRandomId === undefined) {
-      setIsInitiallyID(false);
+    if (randomId !== undefined && prevRandomId !== undefined && prevRandomId !== randomId) {
+      setInit(true);
     }
   }, [randomId, prevRandomId])
 
   useInterval(
     () => {
-      if (isInitiallyID) {
+      if (!init) {
         return
       }
 
@@ -45,7 +45,7 @@ function App() {
         setLastTimeUpID(new Date().valueOf())
       }
     },
-    500,
+    300,
   );
 
   return (
