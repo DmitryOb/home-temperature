@@ -4,8 +4,8 @@ import {getDatabase, ref} from "firebase/database";
 import app from "./firebase-web-app-config";
 import {useObjectVal} from "react-firebase-hooks/database";
 import PrivacyContent from "./PrivacyContent/PrivacyContent";
-import {memo, useRef, useState} from "react";
-import {useInterval} from "react-use";
+import {memo, useEffect, useRef, useState} from "react";
+import {useInterval, usePrevious} from "react-use";
 const db = getDatabase(app);
 const randomIdQuery = ref(db, "randomId");
 const temperatureQuery = ref(db, "temperature");
@@ -20,14 +20,26 @@ function App() {
   const [humidity, loadingH, errorH] = useObjectVal<number, string, string>(humidityQuery);
 
   const [randomId, loadingR, errorR] = useObjectVal<number, string, string>(randomIdQuery);
+  const prevRandomId = usePrevious(randomId);
+  const [isInitiallyID, setIsInitiallyID] = useState(true);
   const lastRandomIdRef = useRef(randomId);
-  const [lastTimeUpID, setLastTimeUpID] = useState(new Date().valueOf());
+  const [lastTimeUpID, setLastTimeUpID] = useState(0);
   const [isOnline, setIsOnline] = useState(false)
+
+  useEffect(() => {
+    if (prevRandomId !== randomId && prevRandomId === undefined) {
+      setIsInitiallyID(false);
+    }
+  }, [randomId, prevRandomId])
 
   useInterval(
     () => {
-      // if more than OFFLINE_CONDITION_TIME milliseconds randomId not changes it does it mean that we are offline
-      new Date().valueOf() - lastTimeUpID > OFFLINE_CONDITION_TIME ? setIsOnline(false) : setIsOnline(true);
+      if (isInitiallyID) {
+        return
+      }
+
+      const differenceInMs = new Date().valueOf() - lastTimeUpID;
+      differenceInMs > OFFLINE_CONDITION_TIME ? setIsOnline(false) : setIsOnline(true);
       if (lastRandomIdRef.current !== randomId) {
         lastRandomIdRef.current = randomId;
         setLastTimeUpID(new Date().valueOf())
