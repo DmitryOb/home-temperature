@@ -2,8 +2,8 @@ export const range: [string, number, string][] = [
   ['dark-blue', 21.4, 'rgb(149, 137, 211)'], // ice:    -9999 -> 21.4]
   ['blue', 22.2, 'rgb(95, 143, 197)'],       // cold:   (21.4 -> 22.2]
   ['yellow', 22.8, 'rgb(223, 177, 6)'],      // normal: (22.2 -> 22.8]
-  ['orange', 23.4, 'rgb(255,145,0)'],        // warm:   (22.8 -> 23.4]
-  ['red', 24.5, 'rgb(255,0,0)'],             // hot:    (24.5 -> 9999
+  ['orange', 23.8, 'rgb(255,145,0)'],        // warm:   (22.8 -> 23.8]
+  ['red', 24.5, 'rgb(255,0,0)'],             // hot:    (24.5? -> 9999
 ];
 
 export const getColor = (temp: number | null) => {
