@@ -13,3 +13,4 @@ npm ci
 ```
 npm start
 ```
+vercel dashboard https://vercel.com/dmitryob/vite-vercel-firebase
